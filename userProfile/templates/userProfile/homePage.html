@@ -1,0 +1,53 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container py-5" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <div class="media-body">
+        <h1 class="account-heading">{{ user.username }} HOME PAGE</h1><br><br>
+        <a href="/account/pdf/" class="btn btn-light">pdf</a>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Posts</legend>
+            <br><br>
+            {% for post in posts %}
+            <h3>{{post.post.text}}</h3>
+            <h5>{{post.post.pUser.profileUser.username}}</h5>
+            <h6>{{post.post.date}}</h6>
+            <p><strong> like: </strong>&nbsp;{{post.like}} &nbsp;&nbsp;&nbsp;
+                <strong> dislike: </strong>&nbsp;{{post.dislike}}</p>
+
+            <div style="position:relative; left:950px; top:-95px;">
+                <a href="/account/addLike/{{post.post.id}}/" class="btn btn-light">Add Like</a>
+                <a href="/account/addDislike/{{post.post.id}}/" class="btn btn-dark">Add Dislike</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/account/post/{{post.post.pUser.profileUser.id}}/{{post.post.id}}" class="btn btn-light">see
+                    Post</a>
+            </div>
+            <div style="position:relative; top:-25px;">
+                <hr>
+            </div>
+            {%endfor%}
+        </fieldset>
+        <div style="position:absolute; left:85px; top:142px;">
+            <div style="position:relative; left:3px;">
+                <a href="/account/homePage/" class="btn btn-light mt-2">Home</a><br>
+            </div>
+            <a href="/account/myProfile" class="btn btn-dark mt-2">profile</a><br>
+            <div style="position:absolute;">
+                <a href="/account/friend_request" class="btn btn-light mt-2">find friends</a><br></div>
+            <br><br><br><a href="/logout" class="btn btn-dark mt-2">logout</a>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5">
+    <div class="media-body">
+        <h1 class="account-heading"> Friend Request</h1>
+        <h2>{{ user.username }} ---> {{receiver}}</h2> <br><br>
+    </div>
+    {% if created %}
+    <p>friend request sent </p>
+    {% else %}
+    <p> friend request was already sent or you are friends already</p>
+    {% endif %}
+    <div class="form-group">
+        <a href="/account/myProfile" class="btn btn-dark mt-5">back to profile</a>
+    </div>
+</div>
+{% endblock %}

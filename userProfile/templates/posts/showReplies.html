@@ -1,0 +1,41 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5">
+    <div class="media-body">
+        <h1 class="account-heading">{{ post.pUser.profileUser.username }}</h1><br>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Comment Detail</legend>
+            <h5><strong> description: </strong>&nbsp;{{comment.text}}</h5>
+            <p><strong> created date: </strong>&nbsp;{{comment.createDate}}</p>
+            <br>
+            <legend class="border-bottom mb-4">Replies</legend>
+            {% for reply in replies%}
+            {% if reply.motherComment.id == comment.id%}
+            <h5>{{reply.text}}</h5>
+            <p>{{reply.user.profileUser.username}} &nbsp;&nbsp;&nbsp;&nbsp;{{reply.createDate}}</p>
+            <hr>
+            {%endif%}
+            {%endfor%}
+        </fieldset>
+        <div style="position:absolute; left:1400px; top:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="form-group">
+                {%if '/myPost/' in request.META.HTTP_REFERER %}
+                <a href="/account/comment/new/{{comment.post.id}}/{{comment.id}}" class="btn btn-light mt-5">New
+                    Reply</a>
+                <a href="/account/myPost/{{comment.post.id}}" class="btn btn-dark  mt-5">back to Post</a>
+                {%endif%}
+                {%if '/post/' in request.META.HTTP_REFERER %}
+                <a href="/account/comment/new/{{post.id}}" class="btn btn-light  mt-5">New Reply</a>
+                <a href="/account/homePage/" class="btn btn-dark  mt-5">back to Home</a><br>
+                {%endif%}
+
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

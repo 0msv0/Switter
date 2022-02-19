@@ -1,0 +1,54 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5">
+    <div class="media-body">
+        <h1 class="account-heading">{{ post.pUser.profileUser.username }}</h1><br>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Post Detail</legend>
+            <h5><strong> description: </strong>&nbsp;{{post.text}}</h5>
+            <p><strong> created date: </strong>&nbsp;{{post.date}}</p>
+            <p><strong> like: </strong>&nbsp;{{likes}} &nbsp;&nbsp;&nbsp;
+                <strong> dislike: </strong>&nbsp;{{dislikes}}</p>
+            <br>
+
+            <legend>Comments</legend>
+            {% for comment in comments%}
+            <hr>
+            <h5>{{comment.text}}</h5>
+            <p>{{comment.user.profileUser.username}} &nbsp;&nbsp;&nbsp;&nbsp;{{comment.createDate}}</p>
+            <hr>
+            <div style="position:relative; left:1020px; top:-80px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/account/comment/new/{{post.id}}/{{comment.id}}" class="btn btn-light">New Reply</a>
+                <a href="/account/replies/{{comment.id}}" class="btn btn-dark">Show Replies</a>
+            </div>
+            {%endfor%}
+
+        </fieldset>
+        <div style="position:absolute; left:1289px; top:100px;">&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="form-group">
+                <a href="/account/comment/new/{{post.id}}" class="btn btn-light  mt-5">New Comment</a>
+                <a href="/account/profile/{{post.pUser.profileUser.id}}/" class="btn btn-dark  mt-5">user profile</a><br>
+                <div style="position:relative; left:25px; top:50px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/account/addLike/{{post.id}}/" class="btn btn-light mt-2">Add Like</a>
+                    <a href="/account/addDislike/{{post.id}}/" class="btn btn-dark mt-2">Add Dislike</a>
+                </div>
+            </div>
+        </div>
+        <div style="position:absolute; left:85px; top:142px;">
+            <div style="position:relative; left:3px;">
+                <a href="/account/homePage/" class="btn btn-light mt-2">Home</a><br>
+            </div>
+            <a href="/account/myProfile" class="btn btn-dark mt-2">profile</a><br>
+            <div style="position:absolute;">
+                <a href="/account/friend_request" class="btn btn-light mt-2">find friends</a><br></div>
+            <br><br><br><a href="/logout" class="btn btn-dark mt-2">logout</a>
+
+        </div>
+    </form>
+</div>
+{% endblock content %}

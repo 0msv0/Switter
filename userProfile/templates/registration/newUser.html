@@ -1,0 +1,24 @@
+{% extends "userProfile/base.html" %}
+{% block title %}Profile Page{% endblock title %}
+{% block content %}
+
+<div class="form-content">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="container py-5">
+            <div class="col-md-3">
+                <legend class="border-bottom mb-4">Profile Info</legend>
+                <br><br>
+                <label class="small mb-2">first name:</label> {{ user_form.first_name }}<br>
+                <label class="small mb-2">last name: </label> {{ user_form.last_name }} <br><br>
+                <label class="small mb-2">Bio:</label> {{ profile_form.bio }}<br>
+            </div>
+        </div>
+        <div class="container py-5">
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

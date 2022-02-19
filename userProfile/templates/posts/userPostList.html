@@ -1,0 +1,35 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5" xmlns="http://www.w3.org/1999/html">
+    <div class="media-body">
+        <h1 class="account-heading">{{username}}</h1><br><br>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Posts</legend>
+            <br><br>
+            {% for post in posts %}
+            <h5>{{post.post.text}}</h5>
+            <p> {{post.post.date}}</p>
+            <p><strong>  like: </strong>&nbsp;{{post.like}} &nbsp;&nbsp;&nbsp;
+            <strong> dislike: </strong>&nbsp;{{post.dislike}}</p>
+
+            <div style="position:relative; left:1175px; top:-85px;">
+                <a href="/account/post/{{id}}/{{post.post.id}}" class="btn btn-light mt-2">see Post</a>
+            </div>
+            <div style="position:relative; top:-25px;">
+                <hr>
+            </div>
+            {%endfor%}
+        </fieldset>
+        <div class="form-group">
+            <a href="/account/myProfile" class="btn btn-dark mt-2">back to profile</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+

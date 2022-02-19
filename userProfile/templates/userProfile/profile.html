@@ -1,0 +1,47 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container py-5">
+    <div class="media-body">
+        <h1 class="account-heading">{{ user.username }}</h1>
+        <p class="text-secondary">{{ user.email }}</p>
+        <p class="text-secondary"><strong> Created: </strong>&nbsp;{{user.date_joined}} </p><br>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <div style="position:relative; left:500px; top:-170px;">
+                <legend class="border-bottom mb-4">Profile Info</legend>
+                <p><strong> first name: </strong>&nbsp;{{user.first_name}}&nbsp; &nbsp; &nbsp;<strong>last name
+                    :</strong>&nbsp;{{user.last_name}}
+                </p>
+                <p><strong> bio: </strong>&nbsp;{{user.profile.bio}}
+                <hr>
+            </div>
+            <div style="position:absolute; top:200px;">
+                <h5><a href="/account/friendlist/"><strong>Friends:</strong></a>&nbsp;{{profile.get_friends_no}} &nbsp;
+                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;<a href="/account/myPosts/"><strong>Posts:</strong></a>&nbsp;{{profile.get_posts_no}}
+                </h5>
+            </div>
+        </fieldset>
+        <div style="position:relative; left:490px; top:-220px;">&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/account/requestPage" class="btn  btn-light  mt-5">request page</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/account/post/new" class="btn btn-dark mt-5">new post</a><br>
+        </div>
+    </form>
+    <div style="position:absolute; left:85px; top:142px;">
+            <div style="position:relative; left:3px;">
+                <a href="/account/homePage/" class="btn btn-light mt-2">Home</a><br>
+            </div>
+            <a href="/account/myProfile" class="btn btn-dark mt-2">profile</a><br>
+            <div style="position:absolute;">
+                <a href="/account/friend_request" class="btn btn-light mt-2">find friends</a><br></div>
+            <br><br><br><a href="/logout" class="btn btn-dark mt-2">logout</a>
+
+        </div>
+</div>
+{% endblock content %}

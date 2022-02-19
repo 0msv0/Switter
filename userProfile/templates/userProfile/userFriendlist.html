@@ -1,0 +1,39 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5" xmlns="http://www.w3.org/1999/html">
+    <div class="media-body">
+        <h1 class="account-heading">{{ user.username }}</h1><br><br>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Friends</legend>
+            <br><br>
+            {% for friend in allFriends %}
+            <h4>{{friend}}</h4>
+            <div style="position:relative; left:1175px; top:-45px;">
+                <a href="/account/profile/{{friend.id}}/" class="btn btn-dark mt-2">see profile</a>
+            </div>
+            <div style="position:relative; top:-20px;"><hr></div>
+            {%endfor%}
+        </fieldset>
+        <div class="form-group">
+            <a href="/account/profile/{{id}}" class="btn btn-dark mt-2">back to profile</a>
+        </div>
+    </form>
+    <div style="position:absolute; left:85px; top:142px;">
+            <div style="position:relative; left:3px;">
+                <a href="/account/homePage/" class="btn btn-light mt-2">Home</a><br>
+            </div>
+            <a href="/account/myProfile" class="btn btn-dark mt-2">profile</a><br>
+            <div style="position:absolute;">
+                <a href="/account/friend_request" class="btn btn-light mt-2">find friends</a><br></div>
+            <br><br><br><a href="/logout" class="btn btn-dark mt-2">logout</a>
+
+        </div>
+</div>
+{% endblock content %}
+
+

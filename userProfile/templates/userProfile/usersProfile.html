@@ -1,0 +1,53 @@
+{% extends "userProfile/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container py-5">
+    <div class="media-body">
+        <h1 class="account-heading">{{ profile.profileUser.username }}</h1>
+        <p class="text-secondary"><strong> Created: </strong>&nbsp;{{profile.profileUser.date_joined}} </p>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <div style="position:relative; left:500px; top:-100px;">
+                <legend class="border-bottom mb-4">Profile Info</legend>
+                <p><strong> first name: </strong>&nbsp;{{profile.profileUser.first_name}}&nbsp;&nbsp;&nbsp;<strong> last
+                    name : </strong>&nbsp;{{profile.profileUser.last_name}}</p>
+                <p><strong> bio: </strong>&nbsp;{{profile.profileUser.profile.bio}}</p>
+                <hr>
+            </div>
+            <div style="position:absolute; top:170px;">
+                <h5><a href="/account/friendlist/{{profile.profileUser.id}}/"><strong>Friends:</strong></a>&nbsp;{{profile.get_friends_no}}
+                    &nbsp;&nbsp;<a href="/account/posts/{{profile.profileUser.id}}"><strong>Posts:</strong></a>&nbsp;{{profile.get_posts_no}}
+                </h5>
+            </div>
+        </fieldset>
+        <div style="position:relative; left:500px; top:-150px;">
+            {% if '/requestPage/' in request.META.HTTP_REFERER %}
+                <a href="/account/requestPage/" class="btn btn-dark  mt-5">back to request page</a>
+            {%else%}
+            {% if profile.profileUser not in request.user.profile.get_friends %}
+            {% if profile.profileUser.id != request.user.id %}
+            <a href="/account/send_friend_request/{{profile.profileUser.id}}/" class="btn btn-light mt-5">send friend
+                request</a>
+            <a href="/account/friend_request/" class="btn btn-dark  mt-5">back to find friend</a>
+            {%endif%}
+            {%else%}
+            <a href="/account/friendlist/" class="btn btn-dark  mt-5">back to friendList</a>
+            {%endif%}
+            {%endif%}
+        </div>
+    </form>
+    <div style="position:absolute; left:85px; top:142px;">
+            <div style="position:relative; left:3px;">
+                <a href="/account/homePage/" class="btn btn-light mt-2">Home</a><br>
+            </div>
+            <a href="/account/myProfile" class="btn btn-dark mt-2">profile</a><br>
+            <div style="position:absolute;">
+                <a href="/account/friend_request" class="btn btn-light mt-2">find friends</a><br></div>
+            <br><br><br><a href="/logout" class="btn btn-dark mt-2">logout</a>
+
+        </div>
+</div>
+{% endblock content %}
